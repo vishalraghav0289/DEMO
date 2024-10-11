@@ -1,61 +1,57 @@
 import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const getDataOptions = {
-  method: 'GET',
-  url: 'https://api.freeapi.app/api/v1/public/randomusers/user/random',
+const BASE_URL = 'https://api.freeapi.app/api/v1';
+
+const api = axios.create({
+  baseURL: BASE_URL,
   headers: { accept: 'application/json' }
-};
+});
 
-const postDataOptions = {
-  method: 'POST',
-  url: 'https://api.freeapi.app/api/v1/kitchen-sink/http-methods/post',
-  headers: { accept: 'application/json' }
-};
-
-const putDataOptions = {
-  method: 'PUT',
-  url: 'https://api.freeapi.app/api/v1/kitchen-sink/http-methods/put',
-  headers: { accept: 'application/json' }
-};
-
-const deleteDataOptions = {
-  method: 'DELETE',
-  url: 'https://api.freeapi.app/api/v1/kitchen-sink/http-methods/delete',
-  headers: { accept: 'application/json' }
-};
-
-export async function getData() {
-  try {
-    const { data } = await axios.request(getDataOptions);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
+export const getRandomUser = createAsyncThunk(
+  'users/getRandomUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/public/randomusers/user/random');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-}
+);
 
-export async function postData() {
-  try {
-    const { data } = await axios.request(postDataOptions);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
+export const postData = createAsyncThunk(
+  'data/postData',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/kitchen-sink/http-methods/post', payload);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-}
+);
 
-export async function putData() {
-  try {
-    const { data } = await axios.request(putDataOptions);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
+export const putData = createAsyncThunk(
+  'data/putData',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await api.put('/kitchen-sink/http-methods/put', payload);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-}
+);
 
-export async function deleteData() {
-  try {
-    const { data } = await axios.request(deleteDataOptions);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
+export const deleteData = createAsyncThunk(
+  'data/deleteData',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.delete('/kitchen-sink/http-methods/delete');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-}
+);
