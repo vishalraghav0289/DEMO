@@ -1,26 +1,28 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-function Home() {
+export default function Home() {
+  const { isAuthenticated, logout } = useAuth();
+
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
-      <div className="text-center mb-8 max-w-screen-lg w-full px-4">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-600">
-          Manage Users with Ease
-        </h1>
-        <p className="text-base sm:text-lg text-gray-700 mt-4">
-          A simple user management system for your organization
-        </p>
-      </div>
-      <div className="flex flex-col sm:flex-row gap-4 mt-4">
-        <button className="bg-green-500 text-white py-3 px-6 rounded-lg text-base sm:text-lg hover:bg-green-600">
-          Register
-        </button>
-        <button className="bg-white text-blue-600 border-2 border-blue-600 py-3 px-6 rounded-lg text-base sm:text-lg hover:bg-blue-50">
-          Skip and Move On
-        </button>
-      </div>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-center mb-6">User Management</h1>
+      <nav className="flex justify-center space-x-4 mb-8">
+        <Link to="/" className="text-blue-500 hover:text-blue-700">Home</Link>
+        {isAuthenticated ? (
+          <>
+            <Link to="/users" className="text-blue-500 hover:text-blue-700">Users</Link>
+            <button onClick={logout} className="text-blue-500 hover:text-blue-700">Logout</button>
+          </>
+        ) : (
+          <Link to="/login" className="text-blue-500 hover:text-blue-700">Login</Link>
+        )}
+      </nav>
+      <main className="bg-gray-100 p-6 rounded-lg shadow">
+        <h2 className="text-xl font-semibold mb-4">Welcome to User Management</h2>
+        <p>This is a simple user management system.</p>
+      </main>
     </div>
   );
 }
-
-export default Home;
