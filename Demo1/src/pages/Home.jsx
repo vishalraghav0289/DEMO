@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Home() {
+function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-6">API Demo Home</h1>
@@ -19,3 +19,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;
