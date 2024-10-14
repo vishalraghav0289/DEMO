@@ -1,99 +1,91 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = 'https://api.freeapi.app/api/v1';
+const API_BASE_URL = 'https://api.freeapi.app/api/v1';
 
-export const getRandomUser = createAsyncThunk(
-  'api/getRandomUser',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`${BASE_URL}/public/randomusers/user/random`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'An error occurred');
-    }
+const apiCall = async (method, endpoint, data = null) => {
+  try {
+    const config = {
+      method,
+      url: `${API_BASE_URL}${endpoint}`,
+      data,
+    };
+    const response = await axios(config);
+    return response.data;
+  } catch (error) {
+    console.error(`API call failed: ${error.message}`);
+    throw error.response?.data || 'Something went wrong';
   }
+};
+
+export const getRandomUser = createAsyncThunk('api/getRandomUser', () =>
+  apiCall('get', '/public/randomusers/user/random')
 );
 
-export const postData = createAsyncThunk(
-  'api/postData',
-  async (payload, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(`${BASE_URL}/kitchen-sink/http-methods/post`, payload);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'An error occurred');
-    }
-  }
+export const postData = createAsyncThunk('api/postData', (payload) =>
+  apiCall('post', '/kitchen-sink/http-methods/post', payload)
 );
 
-export const putData = createAsyncThunk(
-  'api/putData',
-  async (payload, { rejectWithValue }) => {
-    try {
-      const response = await axios.put(`${BASE_URL}/kitchen-sink/http-methods/put`, payload);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'An error occurred');
-    }
-  }
+export const putData = createAsyncThunk('api/putData', (payload) =>
+  apiCall('put', '/kitchen-sink/http-methods/put', payload)
 );
 
-export const deleteData = createAsyncThunk(
-  'api/deleteData',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.delete(`${BASE_URL}/kitchen-sink/http-methods/delete`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'An error occurred');
-    }
-  }
+export const deleteData = createAsyncThunk('api/deleteData', () =>
+  apiCall('delete', '/kitchen-sink/http-methods/delete')
 );
+
+
+const initialState = {
+  user: null,
+  postResponse: null,
+  putResponse: null,
+  deleteResponse: null,
+  isLoading: false,
+  error: null,
+};
 
 const apiSlice = createSlice({
   name: 'api',
-  initialState: {
-    user: null,
-    postResponse: null,
-    putResponse: null,
-    deleteResponse: null,
-    loading: false,
-    error: null,
+  initialState,
+  reducers: {
+
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
+
       .addCase(getRandomUser.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(getRandomUser.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.user = action.payload.data;
       })
       .addCase(getRandomUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || 'An error occurred';
+        state.isLoading = false;
+        state.error = action.error.message;
       })
+
       .addCase(postData.fulfilled, (state, action) => {
         state.postResponse = action.payload;
       })
-      .addCase(postData.rejected, (state, action) => {
-        state.error = action.payload || 'An error occurred';
-      })
+
       .addCase(putData.fulfilled, (state, action) => {
         state.putResponse = action.payload;
       })
-      .addCase(putData.rejected, (state, action) => {
-        state.error = action.payload || 'An error occurred';
-      })
+
       .addCase(deleteData.fulfilled, (state, action) => {
         state.deleteResponse = action.payload;
       })
-      .addCase(deleteData.rejected, (state, action) => {
-        state.error = action.payload || 'An error occurred';
-      });
+
+     
+      .addMatcher(
+        (action) => action.type.endsWith('/rejected'),
+        (state, action) => {
+          state.isLoading = false;
+          state.error = action.error.message || 'An unexpected error occurred';
+        }
+      );
   },
 });
 
