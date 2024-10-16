@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    // Initialize state from local storage
     const saved = localStorage.getItem('isLoggedIn');
     return saved ? JSON.parse(saved) : false;
   });
 
   useEffect(() => {
-    // Update local storage when state changes
     localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
 

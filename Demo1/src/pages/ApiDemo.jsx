@@ -7,8 +7,8 @@ function ApiDemo() {
   const { user, postResponse, putResponse, deleteResponse, loading, error } = useSelector(state => state.api);
 
   const handleGetUser = () => dispatch(getRandomUser());
-  const handlePostData = () => dispatch(postData({ message: 'Hello, API!' }));
-  const handlePutData = () => dispatch(putData({ message: 'Updated data' }));
+  const handlePostData = () => dispatch(postData());
+  const handlePutData = () => dispatch(putData());
   const handleDeleteData = () => dispatch(deleteData());
 
   return (
