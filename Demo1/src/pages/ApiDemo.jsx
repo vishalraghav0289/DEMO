@@ -22,7 +22,7 @@ function ApiDemo() {
           >
             Get Random User
           </button>
-          {loading && <p className="mt-4 text-gray-600">Loading...</p>}
+          {loading && <p className="mt-4 text-gray-600">Loading......</p>}
           {error && <p className="mt-4 text-red-500">{error}</p>}
           {user && (
             <div className="mt-4">

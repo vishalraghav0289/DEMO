@@ -38,6 +38,7 @@ function Home() {
         <nav className="flex flex-wrap justify-center space-x-4 mb-8">
           <Link to="/about" className="text-blue-500 hover:text-blue-700">About Us</Link>
           <Link to="/contact" className="text-blue-500 hover:text-blue-700">Contact Us</Link>
+          <Link to="/demopage" className="text-blue-500 hover:text-blue-700">Demo page</Link>
           {isLoggedIn && (
             <Link to="/api-demo" className="text-blue-500 hover:text-blue-700">API Demo</Link>
           )}
