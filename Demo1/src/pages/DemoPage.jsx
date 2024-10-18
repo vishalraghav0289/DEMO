@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
+import '../index.css';
 
 export default function DemoPage() {
   const [useClientId, setUseClientId] = useState(true)
@@ -14,27 +15,25 @@ export default function DemoPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#D6BB6F] flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-lg p-8 w-full max-w-[480px]">
-        <div className="flex justify-center mb-6">
-        {/* idhar image aaa gi  khanzana ki*/}
-          <img src="/" alt="SSF Khazana Logo" className="h-15 w-15" />
+    <div className="min-h-screen bg-[#D6BB6F] flex items-center justify-center pt-[106.5px] pb-[120.5px] px-[20px]">
+      <div className="bg-white rounded-3xl shadow-lg p-8 w-full max-w-[480px] flex flex-col justify-between h-full">
+        <div className="flex justify-center mb-6 w-42 h-17">
+          <img src="/public/Logo.svg" alt="SSF Khazana Logo" className="h-15 w-15" />
         </div>
-        <h1 className="text-3xl font-bold mb-2 text-center">Log in to your account.</h1>
-        <p className="text-gray-600 text-center mb-8">
-          Welcome to SSF Khazana, Please put your login credentials below
-          to start investing and earning.
+        <h1 className="text-[#1F1F1F] text-center font-roc-grotesk text-[32px] font-bold leading-normal tracking-[-0.64px] self-stretch">Log in to your account.</h1>
+        <p className="text-[#5C5C5C] text-center font-roc-grotesk text-[16px] font-normal leading-[168%] tracking-[0.24px] self-stretch mb-6">
+          Welcome to SSF Khazana, Please put your login credentials below to start investing and earning.
         </p>
 
-        <div className="flex mb-6">
+        <div className="rounded-md border border-[#F0F0F0] bg-[#FAFAFA] flex items-center p-2 mb-7">
           <button
-            className={`flex-1 py-3 px-4 text-sm font-medium ${useClientId ? 'bg-gray-100 text-gray-900' : 'bg-white text-gray-500'} rounded-l-lg`}
+            className={`flex-1 p-[14px] px-[24px] justify-center items-center rounded-l border border-[#EAEAEA] ${useClientId ? 'bg-gray-100 text-[#1A1B21]' : 'bg-white text-[#1A1B21]'} text-center leading-normal font-roc-grotesk text-[14px] font-normal font-medium`}
             onClick={() => setUseClientId(true)}
           >
             Use Client ID
           </button>
           <button
-            className={`flex-1 py-3 px-4 text-sm font-medium ${!useClientId ? 'bg-gray-100 text-gray-900' : 'bg-white text-gray-500'} rounded-r-lg`}
+            className={`flex-1 p-[14px] px-[24px] justify-center items-center rounded-r border border-[#EAEAEA] ${!useClientId ? 'bg-gray-100 text-[#1A1B21]' : 'bg-white text-[#1A1B21]'} text-center leading-normal font-roc-grotesk text-[14px] font-normal font-medium`}
             onClick={() => setUseClientId(false)}
           >
             Use Email ID
@@ -43,7 +42,7 @@ export default function DemoPage() {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="identifier">
+            <label className="text-gray-900 text-xs font-medium leading-5 opacity-80" htmlFor="identifier">
               {useClientId ? 'Your Client ID' : 'Your Email'}
             </label>
             <input
@@ -55,8 +54,8 @@ export default function DemoPage() {
               onChange={(e) => setIdentifier(e.target.value)}
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="password">
+          <div className="mb-4">
+            <label className="text-gray-900 text-xs font-medium leading-5 opacity-80" htmlFor="password">
               Password
             </label>
             <div className="relative">
@@ -77,23 +76,22 @@ export default function DemoPage() {
               </button>
             </div>
             <div className="flex justify-end mt-2">
-              {/*idhar link add  karna hai*/}
               <a href="" className="text-sm text-[#D4B96B] hover:underline">Forgot password?</a>
             </div>
           </div>
           <button
-            className="w-full text-white bg-[#D4B96B] hover:bg-[#C1A75E] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center"
+            className="mb-[28px] w-full text-white bg-[#D4B96B] hover:bg-[#C1A75E] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center"
             type="submit"
           >
             Login
           </button>
         </form>
 
-        <p className="text-sm text-gray-600 text-center mt-6">
+        <p className="mb-[16px] text-sm text-gray-600 text-center mt-6">
           Don't have an account? <a href="#" className="text-[#D6BB6F] hover:underline">Create account</a>
         </p>
 
-        <div className="mt-6">
+        <div className="mt-6 mb-[40px]">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
@@ -103,17 +101,17 @@ export default function DemoPage() {
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-2 gap-3">
+          <div className="mt-6 grid grid-cols-2 gap-x-[24px] mb-[24px]">
             <div>
-              {/* idhar google ka logo */}
-              <a href="#" className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                <img className="h-5 w-5" src="/public/Google logo.svg" alt="Google logo" />
+              <a href="#" className="w-full inline-flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-gray-500 hover:bg-gray-50">
+                <img className="h-5 w-5 mr-2" src="/public/Google logo.svg" alt="Google logo" />
+                <span className="text-[#1C1E2C] font-sans text-[16px] font-semibold leading-normal">Google</span>
               </a>
-            </div>
+            </div>         
             <div>
-                {/* idhar google ka logo */}
               <a href="#" className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <img className="h-5 w-5" src="/public/Facebook logo.svg" alt="Facebook logo" />
+                <span className="text-[#1C1E2C] font-sans text-[16px] font-semibold leading-normal">Facebook</span>
               </a>
             </div>
           </div>
